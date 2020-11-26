@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-UsingLibSample/Pods-UsingLibSample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework
+${BUILT_PRODUCTS_DIR}/ios_libs/ios_libs.framework
