@@ -12,7 +12,7 @@ Primeramente agregar las referencias
   source 'https://github.com/miituo/ios_libs_podspec.git'
   target 'your_project' do
 
-  pod 'ios_libs', '~> 0.1.0'
+  pod 'ios_libs', '~> 0.1.1'
 
   end
 ```
@@ -33,7 +33,7 @@ import ios_libs
 Ejemplo para presentar la vista miituo
   
 ```
-@IBAction func launchLib(_ sender: Any) {
+click_Button_Action_Function() {
     let bundle = Bundle(for: PolizasViewController.self)
     let storyboard = UIStoryboard(name: "Polizas", bundle: bundle)
 
@@ -42,13 +42,19 @@ Ejemplo para presentar la vista miituo
     let vc = myAlert.viewControllers[0] as! PolizasViewController
 
     if celField.text != ""{
+        //phoneDataFromView es la variable key para buscar pólizas
         vc.phoneDataFromView = celField.text
+        //dev es la bandera para especificar ambiente
+        vc.dev = true
         present(myAlert, animated: true, completion: nil)
     }
 }
 ```  
 
-Donde **celField** puede ser un textField para agregar el número de teléfono con el cual la librería buscará las pólizas miituo.
+Donde:
+**celField** puede ser un textField para agregar el número de teléfono con el cual la librería buscará las pólizas.
+**dev** es la bandera para especificar ambiente. **true** es para desarrollo, **false** es para producción.
+  
   
 La librería se encarga de:
 Reporte de odómetro

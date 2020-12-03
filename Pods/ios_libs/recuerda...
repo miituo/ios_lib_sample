@@ -1,0 +1,22 @@
+recuerda....
+
+ojo antes de todo actualizar podspec a 0.4.2
+primero push de la lib con un nuevo tag
+en github se crea nuevo release 0.4.2
+
+despues el add de podspec
+pod repo add miituoLib https://github.com/johncristobal/miituoLibSpecs
+pod repo push miituoLib miituoLib.podspec
+
+===== para la lib 
+permksos de camara 
+
+agregar el codigo para lanzar polizas 
+
+agregar lo que hat que add to podfile 
+
+
+
+pod repo push ios_libs ios_libs.podspec
+
+pod repo add ios_libs https://github.com/miituo/ios_libs_podspec.git
