@@ -5,22 +5,25 @@ PODS:
   - SkeletonView (1.11.0)
 
 DEPENDENCIES:
-  - ios_libs (~> 0.1.1)
+  - Alamofire (~> 5.3.0)
+  - ios_libs (from `/Users/jcristobalj/Documents/ios_libs`)
   - SkeletonView
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-  https://github.com/miituo/ios_libs_podspec.git:
-    - ios_libs
   trunk:
     - SkeletonView
 
+EXTERNAL SOURCES:
+  ios_libs:
+    :path: "/Users/jcristobalj/Documents/ios_libs"
+
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
-  ios_libs: 476dc9a5166988bc61dc9c1ce5263619a852c2ae
+  ios_libs: 437622850ee7ca95295117e803e12044bc31925b
   SkeletonView: cc84ce90a804dd0dd7198dd802833411c8a64eaf
 
-PODFILE CHECKSUM: 290686af9d5dc57c6f86446addf2b2112a559d35
+PODFILE CHECKSUM: 04bbb82e7d9dffd9354bd9de7ac38a14b10100b6
 
 COCOAPODS: 1.9.3
