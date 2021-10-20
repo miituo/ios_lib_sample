@@ -53,7 +53,7 @@ class PolizasTableViewCell: UITableViewCell {
     }
 }
 
-protocol SwiftyTableViewCellDelegate : class {
+protocol SwiftyTableViewCellDelegate : AnyObject {
     func swiftyTableViewCellDidSiniestro(_ sender: PolizasTableViewCell)
     func swiftyTableViewCellDidAction(_ sender: PolizasTableViewCell)
     func swiftyTableViewCellDidRenova(_ sender: PolizasTableViewCell)

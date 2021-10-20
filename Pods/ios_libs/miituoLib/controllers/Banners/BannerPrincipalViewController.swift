@@ -186,7 +186,7 @@ extension BannerPrincipalViewController: UIPageViewControllerDelegate {
     
 }
 
-protocol BannerPrincipalViewControllerDelegate: class {
+protocol BannerPrincipalViewControllerDelegate: AnyObject {
     
     /**
      Called when the number of pages is updated.

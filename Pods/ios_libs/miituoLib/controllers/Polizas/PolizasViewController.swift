@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 import CoreData
-//import SDWebImage
+import SkeletonView
 
 public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegate,UITableViewDelegate, UITableViewDataSource {
 
@@ -37,13 +37,14 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
     @IBOutlet var namelabel: UILabel!
     @IBOutlet var leyendalabel: UILabel!
     
+    @IBOutlet weak var skeletonView: UIView!
+    @IBOutlet weak var skeletonViewTitle: UIView!
+    
     let alertaloading = UIAlertController(title: "Actualizando información...", message: "", preferredStyle: .alert)
 
     let alertaloadingfotos = UIAlertController(title: "", message: "Procesando...", preferredStyle: .alert)
 
     let alertaloadingmesonce = UIAlertController(title: "", message: "Recuperando información, espere por favor...", preferredStyle: .alert)
-
-    let manager = CLLocationManager()
     
     var previous = NSDecimalNumber.one
     var current = NSDecimalNumber.one
@@ -83,6 +84,17 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
         self.getCuponReferido()
         actualizar = "1"
                 
+        UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut) {
+            self.skeletonView.isHidden = false
+            self.skeletonView.showAnimatedSkeleton(usingColor: UIColor.clouds, animation: nil, transition: .crossDissolve(0.25))
+            self.skeletonViewTitle.isHidden = false
+            self.skeletonViewTitle.showAnimatedSkeleton(usingColor: UIColor.clouds, animation: nil, transition: .crossDissolve(0.25))
+
+            self.containerView.isHidden = true
+
+        } completion: { (resp) in
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataTable), name: reloadData, object: nil)
     }
     
@@ -97,7 +109,19 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
     @objc func reloadDataTable(){
         if actualizar == "1"{
             actualizar = "0"
-            self.getJson(telefon: celular)
+            UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut) {
+                self.skeletonView.isHidden = false
+                self.skeletonView.showAnimatedSkeleton(usingColor: UIColor.clouds, animation: nil, transition: .crossDissolve(0.25))
+                self.skeletonViewTitle.isHidden = false
+                self.skeletonViewTitle.showAnimatedSkeleton(usingColor: UIColor.clouds, animation: nil, transition: .crossDissolve(0.25))
+
+                self.containerView.isHidden = true
+
+            } completion: { (resp) in
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.getJson(telefon: celular)
+                }
+            }
         }
     }
     
@@ -253,11 +277,9 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
                 
                 currentCell.imageicon.backgroundColor = UIColor.red//(red: 255/255, green: 106/255, blue: 19/255, alpha: 1.0)
                 
-                //getFotosFaltantes()
             }
             else {
                 currentCell.imageicon.backgroundColor = UIColor.lightGray
-
                 let bundle = Bundle(for: DetalleViewController.self)
                 let storyboard = UIStoryboard(name: "Detalle", bundle: bundle)
                 let myAlert = storyboard.instantiateViewController(withIdentifier: "DetalleViewController") as! DetalleViewController
@@ -621,14 +643,14 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
             return 0.0
         }
         if reportstate == "24"{
-            return 110.0
+            return 120.0
         }
         let mensualidad = Int(arregloPolizas[indexPath.row]["mensualidad"]!)
 
         if mensualidad == 11 {
-            return 140.0;//Choose your custom row height
+            return 150.0;//Choose your custom row height
         }else{
-            return 100.0
+            return 110.0
         }
     }
     
@@ -649,38 +671,44 @@ public class PolizasViewController: UIViewController, SwiftyTableViewCellDelegat
 //*******************Function to get data with the celphone***********************
     func getJson(telefon:String){
         
-        //openloading(mensaje: "Buscando...")
         let manager = DataManager.shared
         manager.getDataClient(telefono: telefon, ip: ip) { (response) in
 
             DispatchQueue.main.async {
-                //self.alertaloadingmesonce.dismiss(animated: true, completion: {
-                    self.refreshControl.endRefreshing()
-                    self.tableview.isUserInteractionEnabled = true
+                if self.skeletonView.sk.isSkeletonActive{
+                    self.skeletonView.isHidden = true
+                    self.skeletonView.hideSkeleton()
+                    self.skeletonViewTitle.isHidden = true
+                    self.skeletonViewTitle.hideSkeleton()
                     
-                    if let data = response as? String{
-                        switch data{
-                                                   
-                        case "ok":
-                            tienepolizas = "si"
-                            self.labelnombre.text = nombrecliente
-                            self.tableview.reloadData()
-                            self.noPolizasLabel.isHidden = true
-                            self.vistaNoPolizas.isHidden = true
-                            NotificationCenter.default.post(name: self.sendCuponReferido, object: nil)
-                            break
-                        default:
-                            let prefs = UserDefaults.standard
-                            prefs.removeObject(forKey:"tutoya")
-                            prefs.removeObject(forKey:"tutoya")
-                            prefs.removeObject(forKey:"celular")
-                            self.launchAlert(message: data)
-                            break
-                        }
-                    }else{
-                        self.launchAlert(message: "Tuvimos un problema al obtener la información. Intente más tarde")
+                    self.containerView.isHidden = false
+                }
+                
+                self.refreshControl.endRefreshing()
+                self.tableview.isUserInteractionEnabled = true
+                
+                if let data = response as? String{
+                    switch data{
+                                               
+                    case "ok":
+                        tienepolizas = "si"
+                        self.labelnombre.text = nombrecliente
+                        self.tableview.reloadData()
+                        self.noPolizasLabel.isHidden = true
+                        self.vistaNoPolizas.isHidden = true
+                        NotificationCenter.default.post(name: self.sendCuponReferido, object: nil)
+                        break
+                    default:
+                        let prefs = UserDefaults.standard
+                        prefs.removeObject(forKey:"tutoya")
+                        prefs.removeObject(forKey:"tutoya")
+                        prefs.removeObject(forKey:"celular")
+                        self.launchAlert(message: data)
+                        break
                     }
-                //})
+                }else{
+                    self.launchAlert(message: "Tuvimos un problema al obtener la información. Intente más tarde")
+                }
             }
         }
     }

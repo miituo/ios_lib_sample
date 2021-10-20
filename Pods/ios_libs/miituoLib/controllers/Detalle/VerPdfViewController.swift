@@ -8,11 +8,12 @@
 import UIKit
 import Alamofire
 import PDFKit
-//import WebKit
+import WebKit
 
 class VerPdfViewController: UIViewController {
 
-    @IBOutlet weak var webview: UIWebView!
+    @IBOutlet weak var webview: WKWebView!
+    //@IBOutlet weak var webview: UIWebView!
     var fileFinal: URL!
     //@IBOutlet var title: UIView!
     //@IBOutlet var pdfView: PDFView!
@@ -56,7 +57,7 @@ class VerPdfViewController: UIViewController {
                 do{
                     let urlString = try DefaultDownloadResponse.result.get()
                     self.fileFinal = urlString
-                    self.webview.loadRequest(URLRequest(url: urlString!))
+                    self.webview.load(URLRequest(url: urlString!))
                 }
                 catch {
                     

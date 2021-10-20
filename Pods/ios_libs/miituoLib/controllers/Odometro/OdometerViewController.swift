@@ -17,6 +17,9 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
     @IBOutlet var openCamera: UIButton!
     @IBOutlet var buttonNoTengoAuto: UIButton!
     
+    @IBOutlet weak var loadingView: CircularProgressView!
+    @IBOutlet weak var imageFinish: UIImageView!
+
     var picker2 = UIImagePickerController()
     var odometrofinal = ""
     var datareturned = [String:String]()
@@ -165,8 +168,11 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
 //************************ send image to WS*********************************//
     func sendimagenesdataarraya(imagenn:UIImage, idpic:String) {
         
-        openloading(mensaje: "")
-
+        self.loadingView.isHidden = false
+        self.imageodometer.alpha = 0.5
+        self.openCamera.alpha = 0.5
+        self.openCamera.isEnabled = false
+        
         //compress image
         let comrimidad = compressImage(image: imagenn)
         let tok = arreglo[self.rowsel]["token"]!
@@ -196,6 +202,8 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
         }
         
         let head : HTTPHeaders = ["Authorization": tok,"Content-Type":"application/json"]
+        
+        self.loadingView.setProgressWithAnimation(duration: 1.0, value: 1.0)
         
         //Alamofire to upload image
         AF.upload(multipartFormData: { multipartFormData in
@@ -311,20 +319,6 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
         }
     }
 
-//************************ compress image*******************************//
-    func openloading(mensaje: String){
-        
-        alertaloading.view.tintColor = UIColor.black
-        //CGRect(x: 1, y: 5, width: self.view.frame.size.width - 20, height: 120))
-        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:10, y:5, width:50, height:50)) as UIActivityIndicatorView
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating();
-        
-        alertaloading.view.addSubview(loadingIndicator)
-        present(alertaloading, animated: true, completion: nil)
-    }
-    
 //************************ lauch polzas********************************//
     func launcpolizas(){
         actualizar = "1"
@@ -350,7 +344,11 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
         NotificationCenter.default.post(name: backServiceName, object: nil)
         
         DispatchQueue.main.async {
-            self.alertaloading.dismiss(animated: true, completion: {
+            self.loadingView.isHidden = true
+            self.imageodometer.alpha = 1.0
+            self.openCamera.isEnabled = true
+            self.openCamera.alpha = 1.0
+            //self.alertaloading.dismiss(animated: true, completion: {
                 
                 let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
                 
@@ -361,7 +359,7 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
                 }))
                 
                 self.present(refreshAlert, animated: true)
-            })
+            //})
         }
     }
 
@@ -384,12 +382,26 @@ class OdometerViewController: UIViewController,UINavigationControllerDelegate, U
         //Lanzamos siguiente odometro
         DispatchQueue.main.async {
                         
-            self.alertaloading.dismiss(animated: true, completion: {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+
+                self.imageFinish.alpha = 1
+                self.imageFinish.bounds.size.width += 60.0
+                self.imageFinish.bounds.size.height += 60.0
+            }) { _ in
+
+                self.imageFinish.alpha = 0
+                self.loadingView.isHidden = true
+                self.imageodometer.alpha = 1.0
+                self.openCamera.alpha = 1.0
+                self.openCamera.isEnabled = true
+                let myAlert = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmOdometerViewController") as! ConfirmOdometerViewController
+                self.navigationController?.pushViewController(myAlert, animated: true)
+            }
+            //self.alertaloading.dismiss(animated: true, completion: {
                 
                 //let storyboard = UIStoryboard(name: "Odometer", bundle: nil)
-                let myAlert = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmOdometerViewController") as! ConfirmOdometerViewController                
-                self.navigationController?.pushViewController(myAlert, animated: true)
-            })
+                
+            //})
         }
     }
 

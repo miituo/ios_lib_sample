@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -63,7 +63,7 @@
                                         <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="celda" rowHeight="100" id="da2-6G-TmK" customClass="CambiarPagoTableViewCell" customModule="miituoLib" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="374" height="100"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="374" height="100"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="da2-6G-TmK" id="TdP-Gy-ShR">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
@@ -188,12 +188,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="EcW-Wo-eBc" secondAttribute="trailing" id="4uC-w0-gAT"/>
+                            <constraint firstItem="tvC-QR-GeL" firstAttribute="top" secondItem="O0T-60-HRg" secondAttribute="top" id="FBS-44-M8T"/>
                             <constraint firstItem="O0T-60-HRg" firstAttribute="trailing" secondItem="tvC-QR-GeL" secondAttribute="trailing" id="K7Z-f3-eVp"/>
                             <constraint firstItem="tvC-QR-GeL" firstAttribute="leading" secondItem="6YE-oT-qnF" secondAttribute="leading" id="W4q-Sg-eQ8"/>
+                            <constraint firstItem="EcW-Wo-eBc" firstAttribute="bottom" secondItem="O0T-60-HRg" secondAttribute="bottom" id="at3-Qm-CoS"/>
                             <constraint firstItem="EcW-Wo-eBc" firstAttribute="leading" secondItem="6YE-oT-qnF" secondAttribute="leadingMargin" id="fhe-ey-C5k"/>
                             <constraint firstItem="EcW-Wo-eBc" firstAttribute="top" secondItem="tvC-QR-GeL" secondAttribute="bottom" constant="8" id="gX5-2J-Gi1"/>
-                            <constraint firstItem="xJV-ZQ-kCI" firstAttribute="top" secondItem="EcW-Wo-eBc" secondAttribute="bottom" id="nOT-xK-s6X"/>
-                            <constraint firstItem="tvC-QR-GeL" firstAttribute="top" secondItem="LNc-rW-FC0" secondAttribute="bottom" id="oJy-K2-SYn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hbD-DN-QvA"/>
@@ -348,25 +348,38 @@
                                     <constraint firstItem="XIp-ns-V1e" firstAttribute="leading" secondItem="cwP-U2-cMW" secondAttribute="trailing" constant="4" id="nVW-Le-OUI"/>
                                 </constraints>
                             </view>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDB-8T-6ZB">
-                                <rect key="frame" x="0.0" y="156" width="414" height="676"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completa el siguiente formulario." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StC-kp-EdR">
+                                <rect key="frame" x="20" y="100" width="374" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEk-SN-fLd">
+                                <rect key="frame" x="10" y="127.5" width="394" height="726.5"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yj9-hE-PY9"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="yj9-hE-PY9" firstAttribute="bottom" secondItem="uDB-8T-6ZB" secondAttribute="bottom" constant="30" id="1jd-lS-cAB"/>
+                            <constraint firstItem="StC-kp-EdR" firstAttribute="leading" secondItem="yj9-hE-PY9" secondAttribute="leading" constant="20" id="4dS-cE-pGj"/>
+                            <constraint firstItem="Pgu-9t-2B4" firstAttribute="top" secondItem="yj9-hE-PY9" secondAttribute="top" constant="8" id="6El-rt-oEQ"/>
                             <constraint firstItem="41K-Wn-lUP" firstAttribute="centerX" secondItem="P11-uc-2Md" secondAttribute="centerX" id="6Vn-rM-4Eh"/>
-                            <constraint firstItem="0oH-UF-9Fg" firstAttribute="top" secondItem="pOH-UE-hpz" secondAttribute="bottom" constant="50" id="8Zi-4E-C0G"/>
                             <constraint firstItem="pOH-UE-hpz" firstAttribute="centerX" secondItem="P11-uc-2Md" secondAttribute="centerX" id="CEy-zf-DnR"/>
+                            <constraint firstItem="yj9-hE-PY9" firstAttribute="trailing" secondItem="StC-kp-EdR" secondAttribute="trailing" constant="20" id="Gtu-8f-fhc"/>
                             <constraint firstItem="41K-Wn-lUP" firstAttribute="leading" secondItem="u4S-fG-wKn" secondAttribute="trailing" constant="16" id="GzP-z9-jtt"/>
+                            <constraint firstItem="yj9-hE-PY9" firstAttribute="trailing" secondItem="hEk-SN-fLd" secondAttribute="trailing" constant="10" id="Hdl-xC-AUb"/>
                             <constraint firstAttribute="trailing" secondItem="Pgu-9t-2B4" secondAttribute="trailing" id="IZU-S6-h1b"/>
-                            <constraint firstItem="uDB-8T-6ZB" firstAttribute="trailing" secondItem="yj9-hE-PY9" secondAttribute="trailing" id="N6Y-qj-Slx"/>
-                            <constraint firstItem="uDB-8T-6ZB" firstAttribute="top" secondItem="u4S-fG-wKn" secondAttribute="bottom" constant="8" id="PcH-yx-oU7"/>
+                            <constraint firstItem="yj9-hE-PY9" firstAttribute="bottom" secondItem="pOH-UE-hpz" secondAttribute="bottom" constant="50" id="R90-Xd-3QG"/>
+                            <constraint firstItem="yj9-hE-PY9" firstAttribute="bottom" secondItem="hEk-SN-fLd" secondAttribute="bottom" constant="8" id="acc-x7-KPM"/>
                             <constraint firstItem="Pgu-9t-2B4" firstAttribute="leading" secondItem="P11-uc-2Md" secondAttribute="leading" id="bSx-Gt-ib5"/>
-                            <constraint firstItem="Pgu-9t-2B4" firstAttribute="top" secondItem="3dh-G9-8lN" secondAttribute="bottom" constant="8" id="eqi-rZ-2rY"/>
-                            <constraint firstItem="uDB-8T-6ZB" firstAttribute="leading" secondItem="yj9-hE-PY9" secondAttribute="leading" id="gFK-ii-P8U"/>
+                            <constraint firstItem="hEk-SN-fLd" firstAttribute="leading" secondItem="yj9-hE-PY9" secondAttribute="leading" constant="10" id="i4X-Yu-EOz"/>
+                            <constraint firstItem="hEk-SN-fLd" firstAttribute="top" secondItem="StC-kp-EdR" secondAttribute="bottom" constant="8" id="i7x-Mg-Kec"/>
+                            <constraint firstItem="StC-kp-EdR" firstAttribute="top" secondItem="Pgu-9t-2B4" secondAttribute="bottom" constant="8" id="iYa-QZ-lGk"/>
                             <constraint firstItem="u4S-fG-wKn" firstAttribute="centerY" secondItem="41K-Wn-lUP" secondAttribute="centerY" id="mAp-EE-Tmk"/>
                             <constraint firstItem="u4S-fG-wKn" firstAttribute="leading" secondItem="P11-uc-2Md" secondAttribute="leadingMargin" constant="8" id="q5v-Cy-g1i"/>
                             <constraint firstItem="41K-Wn-lUP" firstAttribute="top" secondItem="Pgu-9t-2B4" secondAttribute="bottom" constant="16" id="rna-d9-HdN"/>
@@ -374,7 +387,7 @@
                     </view>
                     <connections>
                         <outlet property="bottonOk" destination="pOH-UE-hpz" id="feu-Ru-1DB"/>
-                        <outlet property="vistaPagoWeb" destination="uDB-8T-6ZB" id="H1p-KL-pX4"/>
+                        <outlet property="vistaPagoWeb" destination="hEk-SN-fLd" id="b1h-bp-ed1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edq-RH-O20" userLabel="First Responder" sceneMemberID="firstResponder"/>

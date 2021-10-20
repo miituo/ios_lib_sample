@@ -17,6 +17,6 @@ agregar lo que hat que add to podfile
 
 
 
+pod repo add ios_libs https://github.com/miituo/ios_libs_podspec.git
 pod repo push ios_libs ios_libs.podspec
 
-pod repo add ios_libs https://github.com/miituo/ios_libs_podspec.git

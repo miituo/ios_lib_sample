@@ -10,9 +10,8 @@ import UIKit
 class ReportConfirmViewController: GenericViewController {
     
     var datareturned = [String:String]()
-    
-    
-    @IBOutlet weak var textres: UITextField!
+        
+    @IBOutlet weak var textres: customTextField!
     @IBOutlet weak var imagenodo: UIImageView!
     
     var blurEffect:UIBlurEffect? = nil
@@ -26,7 +25,8 @@ class ReportConfirmViewController: GenericViewController {
         odometro = ""
         flag = false
         textres.text = odometro
-
+        textres.setup(view: self.view, placeT: "Confirma odómetro")
+        
         let rowsel = Int(valueToPass)!
         //set picture loaded
         let pliza = arregloPolizas[rowsel]["nopoliza"]! as String
@@ -68,9 +68,11 @@ class ReportConfirmViewController: GenericViewController {
         let odometroaenviar = textres.text! as String
         
         if odometroaenviar == "" {
-            createAlertMessage(title: "Atención", message: "Es necesario capturar los kms. que marca el odómetro.", controller: self)
+            textres.showError(errorT: "Captura los kms. que marca el odómetro.")
+            //createAlertMessage(title: "Atención", message: "Es necesario capturar los kms. que marca el odómetro.", controller: self)
         }else if odometroaenviar != odometrouno {
-            createAlertMessage(title: "Atención", message: "Los odómetros no coinciden, por favor verifícalos", controller: self)
+            textres.showError(errorT: "Los odómetros no coinciden.")
+            //createAlertMessage(title: "Atención", message: "Los odómetros no coinciden, por favor verifícalos", controller: self)
         }
         else{
             odometro = odometroaenviar

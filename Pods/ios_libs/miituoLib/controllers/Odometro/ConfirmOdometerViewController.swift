@@ -9,7 +9,7 @@ import UIKit
 
 class ConfirmOdometerViewController: GenericViewController {
 
-    @IBOutlet weak var textres: UITextField!
+    @IBOutlet weak var textres: customTextField!
     
     @IBOutlet weak var imagenodo: UIImageView!
         
@@ -21,7 +21,8 @@ class ConfirmOdometerViewController: GenericViewController {
         odometrouno = ""
         textres.delegate = self
         textres.text = odometrouno
-        
+        textres.setup(view: self.view, placeT: "Odómetro")
+
         let rowsel = Int(valueToPass)!
         let poliza = arregloPolizas[rowsel]["lastodometer"]! as String
         
@@ -64,7 +65,8 @@ class ConfirmOdometerViewController: GenericViewController {
         let cadena = textres.text
         
         if cadena == "" {
-            showmessage(message: "Es necesario capturar los kms. que marca el odómetro.", controller: self)
+            textres.showError(errorT: "Captura los kms. que marca el odómetro.")
+            //showmessage(message: "Es necesario capturar los kms. que marca el odómetro.", controller: self)
         }else{
             odometrouno = cadena!
             //launch view to confirm odometer

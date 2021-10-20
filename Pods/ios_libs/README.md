@@ -12,7 +12,7 @@ Primeramente agregar las referencias
   source 'https://github.com/miituo/ios_libs_podspec.git'
   target 'your_project' do
 
-  pod 'ios_libs', '~> 0.1.1'
+  pod 'ios_libs', '~> 0.1.2'
 
   end
 ```

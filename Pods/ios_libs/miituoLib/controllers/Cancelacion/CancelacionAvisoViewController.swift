@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import WebKit
 
 class CancelacionAvisoViewController: UIViewController {
 
@@ -14,8 +15,8 @@ class CancelacionAvisoViewController: UIViewController {
     let alertaloading = UIAlertController(title: "Registro de cancelación", message: "Actualizando póliza...", preferredStyle: .alert)
     
     //@IBOutlet var mensajeOdometro: UIWebView!
-    //@IBOutlet weak var mensajeOdometro: WKWebView!
-    @IBOutlet weak var mensajeOdometro: UIWebView!
+    @IBOutlet weak var mensajeOdometro: WKWebView!
+    //@IBOutlet weak var mensajeOdometro: UIWebView!
     
     @IBOutlet var vistaTabla: UIView!
     
@@ -38,6 +39,7 @@ class CancelacionAvisoViewController: UIViewController {
             "                        <title>TODO supply a title</title> \n" +
             "                        <meta charset=\\UTF-8\\> \n" +
             "                        <meta name=\\viewport\\ content=\\width=device-width, initial-scale=1.0\\> \n" +
+            "   <meta name='viewport' content='width=device-width, shrink-to-fit=YES'> \n" +
             "                        <style type=\"text/css\">\n" +
             "           @font-face {" +
             "    font-family: 'DIN Next Rounded LT Pro';\n " +

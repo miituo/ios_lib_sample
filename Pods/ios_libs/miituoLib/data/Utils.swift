@@ -65,3 +65,18 @@ func getNombreMes(nombre: String) -> String {
         return nombre
     }
 }
+
+func animateImage(image: UIImageView) {
+    UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+
+        image.alpha = 1
+        image.bounds.size.width += 60.0
+        image.bounds.size.height += 60.0
+        
+    }) { _ in
+
+        //self.derechoCompImage.alpha = 0
+        //self.derechoCircularProgress.isHidden = true
+        //self.derechopic.alpha = 1.0
+    }
+}

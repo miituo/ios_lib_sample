@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -108,8 +108,29 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAG-zw-xEv" customClass="CircularProgressView" customModule="miituoLib" customModuleProvider="target">
+                                        <rect key="frame" x="119" y="257.5" width="44" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="R0c-iV-aZY"/>
+                                            <constraint firstAttribute="width" constant="44" id="xNW-VR-X71"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comprobar.png" translatesAutoresizingMaskIntoConstraints="NO" id="3YW-KQ-8Y7">
+                                        <rect key="frame" x="119" y="257.5" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="WWU-IT-31e"/>
+                                            <constraint firstAttribute="height" constant="44" id="iap-bn-cJK"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="3YW-KQ-8Y7" secondAttribute="trailing" constant="40" id="Xsm-Wz-NUc"/>
+                                    <constraint firstAttribute="trailing" secondItem="fAG-zw-xEv" secondAttribute="trailing" constant="40" id="Z7u-Op-G7b"/>
+                                    <constraint firstAttribute="bottom" secondItem="fAG-zw-xEv" secondAttribute="bottom" constant="40" id="kgn-dK-9FN"/>
+                                    <constraint firstAttribute="bottom" secondItem="3YW-KQ-8Y7" secondAttribute="bottom" constant="40" id="wEw-gv-WBE"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71I-cy-VHm">
                                 <rect key="frame" x="211" y="147" width="203" height="341.5"/>
@@ -129,8 +150,29 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRO-Fr-Kox" customClass="CircularProgressView" customModule="miituoLib" customModuleProvider="target">
+                                        <rect key="frame" x="40" y="257.5" width="44" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="j4T-gQ-C2E"/>
+                                            <constraint firstAttribute="width" constant="44" id="se3-7z-ESg"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comprobar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vxs-nP-3aQ">
+                                        <rect key="frame" x="40" y="257.5" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="WO5-Xw-hDz"/>
+                                            <constraint firstAttribute="height" constant="44" id="qKA-fl-YNc"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="WRO-Fr-Kox" secondAttribute="bottom" constant="40" id="6O1-rc-HnA"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vxs-nP-3aQ" secondAttribute="bottom" constant="40" id="VsI-97-uDR"/>
+                                    <constraint firstItem="WRO-Fr-Kox" firstAttribute="leading" secondItem="71I-cy-VHm" secondAttribute="leading" constant="40" id="Wia-M2-DNv"/>
+                                    <constraint firstItem="Vxs-nP-3aQ" firstAttribute="leading" secondItem="71I-cy-VHm" secondAttribute="leading" constant="40" id="nHY-4e-NmF"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUE-RR-STS">
                                 <rect key="frame" x="0.0" y="496.5" width="203" height="341.5"/>
@@ -150,8 +192,29 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comprobar.png" translatesAutoresizingMaskIntoConstraints="NO" id="tbX-Co-i4x">
+                                        <rect key="frame" x="119" y="40" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="RPo-d6-kCG"/>
+                                            <constraint firstAttribute="width" constant="44" id="ohg-s0-YkA"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xq-Y4-3b1" customClass="CircularProgressView" customModule="miituoLib" customModuleProvider="target">
+                                        <rect key="frame" x="119" y="40" width="44" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="CcM-A8-5Oh"/>
+                                            <constraint firstAttribute="height" constant="44" id="Rlv-nM-Rxr"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="tbX-Co-i4x" secondAttribute="trailing" constant="40" id="O4A-5H-RGf"/>
+                                    <constraint firstAttribute="trailing" secondItem="7xq-Y4-3b1" secondAttribute="trailing" constant="40" id="daw-un-UAd"/>
+                                    <constraint firstItem="tbX-Co-i4x" firstAttribute="top" secondItem="VUE-RR-STS" secondAttribute="top" constant="40" id="f6x-hq-vjD"/>
+                                    <constraint firstItem="7xq-Y4-3b1" firstAttribute="top" secondItem="VUE-RR-STS" secondAttribute="top" constant="40" id="ugL-Yk-BE0"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="352-cE-bRy">
                                 <rect key="frame" x="211" y="496.5" width="203" height="341.5"/>
@@ -171,8 +234,29 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comprobar.png" translatesAutoresizingMaskIntoConstraints="NO" id="4tq-7B-Vk3">
+                                        <rect key="frame" x="40" y="40" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="DpR-sT-Hua"/>
+                                            <constraint firstAttribute="height" constant="44" id="Uzx-xG-e8d"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UrY-bA-4Gj" customClass="CircularProgressView" customModule="miituoLib" customModuleProvider="target">
+                                        <rect key="frame" x="40" y="40" width="44" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="2Jj-4c-WiS"/>
+                                            <constraint firstAttribute="width" constant="44" id="VWs-uu-Hki"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="UrY-bA-4Gj" firstAttribute="top" secondItem="352-cE-bRy" secondAttribute="top" constant="40" id="9Ru-a6-jbW"/>
+                                    <constraint firstItem="4tq-7B-Vk3" firstAttribute="leading" secondItem="352-cE-bRy" secondAttribute="leading" constant="40" id="c3u-CM-dbZ"/>
+                                    <constraint firstItem="4tq-7B-Vk3" firstAttribute="top" secondItem="352-cE-bRy" secondAttribute="top" constant="40" id="dXV-lU-Cfm"/>
+                                    <constraint firstItem="UrY-bA-4Gj" firstAttribute="leading" secondItem="352-cE-bRy" secondAttribute="leading" constant="40" id="knk-Pa-UkF"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-d1-UfP">
                                 <rect key="frame" x="137" y="792" width="140" height="40"/>
@@ -229,15 +313,23 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backCircularProgress" destination="UrY-bA-4Gj" id="b8b-Zn-pZ4"/>
+                        <outlet property="backCompImage" destination="4tq-7B-Vk3" id="MJ2-H5-XFN"/>
                         <outlet property="backpic" destination="lH3-81-PyX" id="ht2-Yn-vee"/>
+                        <outlet property="derechoCircularProgress" destination="fAG-zw-xEv" id="YZP-NG-nH6"/>
+                        <outlet property="derechoCompImage" destination="3YW-KQ-8Y7" id="WYy-pm-o5b"/>
                         <outlet property="derechopic" destination="Pff-1x-HXE" id="o7D-MN-vzS"/>
+                        <outlet property="frontCircularProgress" destination="WRO-Fr-Kox" id="V6V-b2-tpa"/>
+                        <outlet property="frontCompImage" destination="Vxs-nP-3aQ" id="FEP-bA-5vQ"/>
                         <outlet property="frontpic" destination="X7t-j8-nqz" id="W72-Wh-4iw"/>
+                        <outlet property="izquierdoCircularProgress" destination="7xq-Y4-3b1" id="DCy-Du-erL"/>
+                        <outlet property="izquierdoCompImage" destination="tbX-Co-i4x" id="SdT-Zb-otY"/>
                         <outlet property="izquierdopic" destination="ohQ-hU-Caj" id="963-Vc-XIw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fnR-YD-qPq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="523" y="24"/>
+            <point key="canvasLocation" x="521.73913043478262" y="23.4375"/>
         </scene>
         <!--Mensaje Fotos View Controller-->
         <scene sceneID="zey-Co-lVc">
@@ -415,6 +507,7 @@
     <resources>
         <image name="back.png" width="204.80000305175781" height="204.80000305175781"/>
         <image name="camara.png" width="300" height="300"/>
+        <image name="comprobar.png" width="128" height="128"/>
         <image name="vista_auto_1.png" width="300" height="300"/>
         <image name="vista_auto_2.png" width="300" height="300"/>
         <image name="vista_auto_3.png" width="300" height="300"/>

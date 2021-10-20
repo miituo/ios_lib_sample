@@ -16,7 +16,8 @@ class ConfirmOdoPopViewController: UIViewController {
     let manager = DataManager.shared
 
     @IBOutlet var labelodo: UILabel!
-    
+    @IBOutlet weak var nextButton: loadingButton!
+
     //@IBOutlet var labelodometro: UILabel!
     let alertaloadingodo = UIAlertController(title: "Odómetro", message: "Subiendo información...", preferredStyle: .alert)
 
@@ -91,239 +92,14 @@ class ConfirmOdoPopViewController: UIViewController {
             ajustaReportOdometer()
         }
     }
-    
-//****************Functionupdatetcasification************************
-    func upstatecasification()
-    {
-        /// ----------- send confirmreport ------------ ///
-        //Para actualizar el campo de Id_Estatus de la tabla de Clientes_Ticket
-        let todosEndpoint: String = "\(ip)UpStateCasification"
-        let tok = arreglo[self.rowsel]["token"]!
-        let cadenaidticket = arregloPolizas[self.rowsel]["idticket"]
-        
-        idticket = Int(cadenaidticket!)!
-        
-        guard let todosURL = URL(string: todosEndpoint) else {
-            return
-        }
-        
-        var todosUrlRequest = URLRequest(url: todosURL)
-        todosUrlRequest.httpMethod = "PUT"
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        todosUrlRequest.addValue(tok, forHTTPHeaderField: "Authorization")
-
-        let newTodo: [String: Any] = ["Id":idticket,"sTiket":9,"GodinName":"App","GodynSolution":""]
-        
-        let jsonTodo: Data
-        do {
-            jsonTodo = try JSONSerialization.data(withJSONObject: newTodo, options: [])
-            todosUrlRequest.httpBody = jsonTodo
-            _ = NSString(data: jsonTodo, encoding: String.Encoding.utf8.rawValue)
-            
-        } catch {
-            return
-        }
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: todosUrlRequest) { (responseData, response, error) in
-
-            if let httpResponse = response as? HTTPURLResponse
-            {
-                if httpResponse.statusCode == 200{
-                    if let str = String(data: responseData!, encoding: String.Encoding.utf8) {
-                        valordevuelto = str
-                    } else {
-                    }
-                } else {
-                    // parse the result as JSON, since that's what the API provides
-                     do {
-                        guard (try JSONSerialization.jsonObject(with: responseData!,
-                                                                options: []) as? [String: Any]) != nil else {
-                            return
-                         }
-                         
-                         self.alertaloadingodo.dismiss(animated: true, completion: {
-                         
-                            let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
-                             
-                             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                             
-                             self.launcpolizas()
-                             }))
-                             
-                             self.present(refreshAlert, animated: true, completion: nil)
-                         })
-                     } catch  {
-                     }
-                }
-            }
-        }
-        task.resume()
-    }
-    
-//***************************update dometer tkcet****************************
-    func ticketupload(){
-
-        //Se actualiza el  odometro en la tabla de Clientes ticket en el campo
-        let todosEndpoint: String = "\(ip)Ticket/"
-        let tok = arreglo[self.rowsel]["token"]!
-
-        guard let todosURL = URL(string: todosEndpoint) else {
-            return
-        }
-        
-        var todosUrlRequest = URLRequest(url: todosURL)
-        todosUrlRequest.httpMethod = "PUT"
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        todosUrlRequest.addValue(tok, forHTTPHeaderField: "Authorization")
-
-        let newTodo: [String: Any] = ["OdomCorrect": 0, "OdomMoment": odometro, "idTicket":idticket, "idPolicy":arregloPolizas[self.rowsel]["nopoliza"]!]
-        
-        let jsonTodo: Data
-        do {
-            jsonTodo = try JSONSerialization.data(withJSONObject: newTodo, options: [])
-            _ = NSString(data: jsonTodo, encoding: String.Encoding.utf8.rawValue)
-            todosUrlRequest.httpBody = jsonTodo
-            
-        } catch {
-            return
-        }
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: todosUrlRequest) { (responseData, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200{
-                    if let str = String(data: responseData!, encoding: String.Encoding.utf8) {
-                        valordevuelto = str
-                    } else {
-                    }
-                } else {
-                     // parse the result as JSON, since that's what the API provides
-                     do {
-                        guard (try JSONSerialization.jsonObject(with: responseData!,
-                                                                options: []) as? [String: Any]) != nil else {
-                            return
-                         }
-                         
-                         self.alertaloadingodo.dismiss(animated: true, completion: {
-                            
-                            let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
-                             
-                             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                             
-                             self.launcpolizas()
-                             }))
-                             
-                             self.present(refreshAlert, animated: true, completion: nil)
-                         })
-                     } catch  {
-                     }
-                }
-            }
-        }
-        task.resume()
-    }
-
-//***************************update status poliza***************************
-    func updatestatus(){
-        
-        let todosEndpoint: String = "\(ip)Policy/UpdatePolicyStatusReport/\(arregloPolizas[rowsel]["idpoliza"]!)/12"
-        let tok = arreglo[self.rowsel]["token"]!
-
-        guard let todosURL = URL(string: todosEndpoint) else {
-            return
-        }
-        
-        var todosUrlRequest = URLRequest(url: todosURL)
-        todosUrlRequest.httpMethod = "PUT"
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        todosUrlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        todosUrlRequest.addValue(tok, forHTTPHeaderField: "Authorization")
-        
-        let session = URLSession.shared
-        let loadTask = session.dataTask(with: todosUrlRequest) { (responseData,response,error) in
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200{
-                    if let str = String(data: responseData!, encoding: String.Encoding.utf8) {
-                        lastvalordev = str
-                        
-                        DispatchQueue.main.async {
-
-                        self.alertaloadingodo.dismiss(animated: true, completion: {
-                            
-                            //si es true o false => pasa sin problermas y cierra
-                            if lastvalordev == "true"{
-                                
-                                let refreshAlert = createAlertMessageOrange(title: "Gracias", message: "Información del odómetro actualizada.", preferredStyle: UIAlertController.Style.alert)
-                                
-                                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                                    
-                                    self.launcpolizas()
-                                }))
-                                
-                                self.present(refreshAlert, animated: true, completion: nil)
-                            }
-                            else
-                            {
-                                let refreshAlert = createAlertMessageOrange(title: "Atención", message: "Error al cargar información, intente más tarde", preferredStyle: UIAlertController.Style.alert)
-                                
-                                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                                    
-                                    self.launcpolizas()
-                                }))
-                                
-                                self.present(refreshAlert, animated: true)
-                            }
-                        })
-                        }
-                        
-                    } else {
-                    }
-                }//sTATUS DIFerente a 200
-                else {
-                    // parse the result as JSON, since that's what the API provides
-                     do {
-                        guard (try JSONSerialization.jsonObject(with: responseData!,options: []) as? [String: Any]) != nil else {
-                        return
-                     }
-                     
-                     self.alertaloadingodo.dismiss(animated: true, completion: {
-                                              
-                        let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
-                        
-                         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                         
-                             self.launcpolizas()
-                         }))
-                         
-                         self.present(refreshAlert, animated: true, completion: nil)
-                     })
-                     
-                     } catch  {
-                     }
-                }
-            }
-         }
-         loadTask.resume()
-        
-         /*while true {
-            if lastvalordev != ""{
-                break;
-            }
-         }*/
-    }
 
 //***************************update status poliza*******************************
     func updatestatusone(){
         
         //alertaloading.dismiss(animated: true, completion: nil)
-        openloading(mensaje: "nanana")
-        
+        //openloading(mensaje: "nanana")
+        self.nextButton.buttonOff()
+
         let todosEndpoint: String = "\(ip)Policy/UpdatePolicyStatusReport/\(arregloPolizas[rowsel]["idpoliza"]!)/12/\(odometro)"
         let tok = arreglo[self.rowsel]["token"]!
         
@@ -346,8 +122,8 @@ class ConfirmOdoPopViewController: UIViewController {
                         lastvalordev = str
                         
                         DispatchQueue.main.async {
-                            
-                            self.alertaloadingodo.dismiss(animated: true, completion: {
+                            self.nextButton.buttonOn()
+                            //self.alertaloadingodo.dismiss(animated: true, completion: {
                                 //si es true o false => pasa sin problermas y cierra
                                 if lastvalordev == "true"{
                                                                     
@@ -375,7 +151,7 @@ class ConfirmOdoPopViewController: UIViewController {
                                     
                                     self.present(refreshAlert, animated: true)
                                 }
-                            })
+                            //})
                         }
                         
                     } else {
@@ -388,19 +164,28 @@ class ConfirmOdoPopViewController: UIViewController {
                             return
                         }
                         
-                        self.alertaloadingodo.dismiss(animated: true, completion: {
+                        //self.alertaloadingodo.dismiss(animated: true, completion: {
+                        self.nextButton.buttonOn()
+                        let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
                             
-                            let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
-                            
-                            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                                
-                                self.launcpolizas()
-                            }))
-                            
-                            self.present(refreshAlert, animated: true, completion: nil)
-                        })
+                            self.launcpolizas()
+                        }))
+                        
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        //})
                         
                     } catch  {
+                        self.nextButton.buttonOn()
+                        let refreshAlert = createAlertMessageOrange(title: "Odómetro", message: "Error al enviar odómetro. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                            self.launcpolizas()
+                        }))
+                        
+                        self.present(refreshAlert, animated: true, completion: nil)
                     }
                 }
             }
@@ -412,20 +197,129 @@ class ConfirmOdoPopViewController: UIViewController {
     func ajustaReportOdometer(){
 
         //open alert to sincronizar
-        openloading(mensaje: "Espere mientras llevámos a cabo el reporte...")
+        //openloading(mensaje: "Espere mientras llevámos a cabo el reporte...")
+        self.nextButton.buttonOff()
+        let tok = arreglo[self.rowsel]["token"]!
+
+        var flagSet = true
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        group.enter()
+
+// ---------- updatecasification ----------
+        AF.request(
+            "\(ip)UpStateCasification",
+            method:.put,
+            parameters:["Id":idticket,"sTiket":7,"GodinName":"App","GodynSolution":""],
+            encoding:JSONEncoding.default,
+            headers: [
+                "Authorization": tok,
+                "Content-Type": "application/json"
+            ]
+        ).responseJSON() { response in
+            group.leave()
+            if response.error != nil{
+                flagSet = false
+            }else{
+                switch response.result {
+                case .success(_):
+                    print("ok")
+                case .failure(let error):
+                    print(error)
+                    flagSet = false
+
+                }
+            }
+        }
         
-        //servicio para actualiza status en UpStateCasification------------------------------------
-        upstatecasification()   //ok
-        ticketupload()
-        updatestatus()
+// ---------- ticket ----------
+        AF.request(
+            "\(ip)Ticket",
+            method:.put,
+            parameters:["OdomCorrect": 0,"OdomMoment": odometro,"idTicket":idticket,"idPolicy":arregloPolizas[self.rowsel]["nopoliza"] ?? ""
+            ],
+            encoding:JSONEncoding.default,
+            headers: [
+                "Authorization": tok,
+                "Content-Type": "application/json"
+            ]
+        ).responseJSON { response in
+            group.leave()
+            if response.error != nil{
+                flagSet = false
+            }else{
+                switch response.result {
+                case .success:
+                    print("ok")
+                case .failure(let error):
+                    print(error)
+                    flagSet = false
+
+                }
+            }
+        }
+        
+// ---------- status 12 ----------
+        AF.request(
+            "\(ip)Policy/UpdatePolicyStatusReport/\(arregloPolizas[rowsel]["idpoliza"]!)/12",
+            method:.put,
+            encoding:JSONEncoding.default,
+            headers: [
+                "Authorization": tok,
+                "Content-Type": "application/json"
+            ]
+        ).responseJSON { response in
+            group.leave()
+            if response.error != nil{
+                flagSet = false
+                print("ok")
+            }else{
+                switch response.result {
+                case .success:
+                    print("ok")
+                case .failure(let error):
+                    print(error)
+                    flagSet = false
+                }
+            }
+        }
+        
+        group.notify(queue: .main, execute: {
+            // Step3: Update the UI
+            //self.isWaiting = false
+            if !flagSet {
+                DispatchQueue.main.async {
+                    self.nextButton.buttonOn()
+                    let refreshAlert = UIAlertController(title: "Odómetro", message: "Error al enviar información. Intente más tarde.", preferredStyle: UIAlertController.Style.alert)
+                     
+                     refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                        self.launcpolizas()
+                     }))
+                     self.present(refreshAlert, animated: true, completion: nil)
+                }
+            }else{
+                
+                
+                let refreshAlert = UIAlertController(title: "Gracias", message: "Información del odómetro actualizada.", preferredStyle: UIAlertController.Style.alert)
+                
+                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                    self.launcpolizas()
+                }))
+                
+                self.present(refreshAlert, animated: true, completion: nil)
+            }
+        })
     }
     
 //enviar odometro first time----------------------------------------
     func enviarodometro(){
         
         //open alert to sincronizar
-        openloading(mensaje: "Espere mientras llevámos a cabo el reporte...")
-        
+        //openloading(mensaje: "Espere mientras llevámos a cabo el reporte...")
+        self.nextButton.buttonOff()
+
         //DispatchQueue.global(qos: .userInitiated).async {
 
         let todosEndpoint: String = "\(ip)ImageProcessing/ConfirmOdometer"
@@ -467,7 +361,8 @@ class ConfirmOdoPopViewController: UIViewController {
                     valordevuelto = str
                                         
                     DispatchQueue.main.async {
-                    self.alertaloadingodo.dismiss(animated: true, completion: {
+                        self.nextButton.buttonOn()
+                    //self.alertaloadingodo.dismiss(animated: true, completion: {
                         
                         //si es true o false => pasa sin problermas y cierra
                         if valordevuelto == "true"{
@@ -502,7 +397,7 @@ class ConfirmOdoPopViewController: UIViewController {
                             }
                             
                         }//, completion: nil)
-                    })
+                    //})
                     }
                  } else {
                  }
@@ -515,7 +410,7 @@ class ConfirmOdoPopViewController: UIViewController {
                  }
                                         
                     DispatchQueue.main.async {
-
+                        self.nextButton.buttonOn()
                         let backServiceName = Notification.Name("backServiceName")
                         NotificationCenter.default.post(name: backServiceName, object: nil)
 
@@ -529,6 +424,21 @@ class ConfirmOdoPopViewController: UIViewController {
                     self.present(refreshAlert, animated: true)
                     }
                  } catch  {
+                     DispatchQueue.main.async {
+                         self.nextButton.buttonOn()
+                         
+                         let backServiceName = Notification.Name("backServiceName")
+                         NotificationCenter.default.post(name: backServiceName, object: nil)
+
+                         let refreshAlert = UIAlertController(title: "Atención", message: "Error al cargar información, intente más tarde", preferredStyle: UIAlertController.Style.alert)
+                     
+                         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                         
+                         self.launcpolizas()
+                     }))
+                     
+                     self.present(refreshAlert, animated: true)
+                     }
                  }
             }
          }
@@ -544,8 +454,9 @@ class ConfirmOdoPopViewController: UIViewController {
 
         // to base64 => yhis is going to be in the thread to send photos
         //open alert to sincronizar
-        openloading(mensaje: "Subiendo información...")
-
+        //openloading(mensaje: "Subiendo información...")
+        self.nextButton.buttonOff()
+        
         let todosEndpoint: String = "\(ip)ReportOdometer/"
         let tok = arreglo[self.rowsel]["token"]!
 
@@ -581,6 +492,7 @@ class ConfirmOdoPopViewController: UIViewController {
 
             if response.error != nil{
                 DispatchQueue.main.async {
+                    self.nextButton.buttonOn()
                     let backServiceName = Notification.Name("backServiceName")
                     NotificationCenter.default.post(name: backServiceName, object: nil)
                     
@@ -609,7 +521,8 @@ class ConfirmOdoPopViewController: UIViewController {
                         let status = response.response?.statusCode
                         if status != 200{
                             DispatchQueue.main.async {
-                                self.alertaloadingodo.dismiss(animated: true, completion: {
+                                self.nextButton.buttonOn()
+                                //self.alertaloadingodo.dismiss(animated: true, completion: {
                                     
                                     if json.count == 1{
                                         //recupera mensaje de error
@@ -645,7 +558,7 @@ class ConfirmOdoPopViewController: UIViewController {
                                     }))
                                     self.present(refreshAlert, animated: true)
                                     }
-                                })
+                                //})
                             }
                         }
                         else
@@ -656,8 +569,8 @@ class ConfirmOdoPopViewController: UIViewController {
                                     return
                                 }
                                 DispatchQueue.main.async {
-    
-                                    self.alertaloadingodo.dismiss(animated: true, completion: {
+                                    self.nextButton.buttonOn()
+                                    //self.alertaloadingodo.dismiss(animated: true, completion: {
     
                                         let backServiceName = Notification.Name("backServiceName")
                                         NotificationCenter.default.post(name: backServiceName, object: nil)
@@ -671,7 +584,7 @@ class ConfirmOdoPopViewController: UIViewController {
                                             //})
                                         }))
                                         self.present(refreshAlert, animated: true)
-                                    })
+                                    //})
                                 }
                             }else{
     
@@ -846,7 +759,8 @@ class ConfirmOdoPopViewController: UIViewController {
                                 parametro_tope_kms = parametrotopekms
     
                                 DispatchQueue.main.async {
-                                    self.alertaloadingodo.dismiss(animated: true, completion: {
+                                    self.nextButton.buttonOn()
+                                    //self.alertaloadingodo.dismiss(animated: true, completion: {
     
                                         //validamos si viene condonacion;
                                         if kmsdescuento != 0 {
@@ -883,7 +797,7 @@ class ConfirmOdoPopViewController: UIViewController {
     
                                             self.present(myAlert, animated: true, completion: nil)
                                         }
-                                    })
+                                    //})
                                 }
                             }
                         }
@@ -896,8 +810,9 @@ class ConfirmOdoPopViewController: UIViewController {
                     DispatchQueue.main.async {
                         let backServiceName = Notification.Name("backServiceName")
                         NotificationCenter.default.post(name: backServiceName, object: nil)
+                        self.nextButton.buttonOn()
                         
-                        self.alertaloadingodo.dismiss(animated: true, completion: {
+                        //self.alertaloadingodo.dismiss(animated: true, completion: {
                             let refreshAlert = createAlertMessageOrange(title: "Atención", message: "Tenemos problemas para reportar, intente más tarde.", preferredStyle: UIAlertController.Style.alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
@@ -907,26 +822,12 @@ class ConfirmOdoPopViewController: UIViewController {
                                 //})
                             }))
                             self.present(refreshAlert, animated: true)
-                        })
+                        //})
                     }
                     break
                 }
             }
         }
-    }
-
-//loading-------------------------------------------------------------------
-    func openloading(mensaje: String){
-        
-        alertaloadingodo.view.tintColor = UIColor.black
-        //CGRect(x: 1, y: 5, width: self.view.frame.size.width - 20, height: 120))
-        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:10, y:5, width:50, height:50)) as UIActivityIndicatorView
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating();
-        
-        alertaloadingodo.view.addSubview(loadingIndicator)
-        present(alertaloadingodo, animated: true, completion: nil)
     }
 
 //elaunch polizas-------------------------------------------------------------

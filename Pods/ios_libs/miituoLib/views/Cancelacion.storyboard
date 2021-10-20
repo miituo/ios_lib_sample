@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,8 +111,8 @@
                             <constraint firstItem="hbg-ly-9RE" firstAttribute="trailing" secondItem="dLC-0l-pTO" secondAttribute="trailingMargin" id="QiV-z6-o0H"/>
                             <constraint firstItem="hbg-ly-9RE" firstAttribute="top" secondItem="ppx-YP-9Yq" secondAttribute="bottom" constant="10" id="Vmi-iU-voJ"/>
                             <constraint firstAttribute="trailing" secondItem="ppx-YP-9Yq" secondAttribute="trailing" id="Ycy-gU-ZVR"/>
-                            <constraint firstItem="ppx-YP-9Yq" firstAttribute="top" secondItem="eFB-M7-hqf" secondAttribute="bottom" constant="8" id="aY4-hV-EvR"/>
                             <constraint firstItem="Owa-JS-GFp" firstAttribute="centerY" secondItem="p1w-O4-Z9J" secondAttribute="centerY" id="b4M-OI-fR3"/>
+                            <constraint firstItem="ppx-YP-9Yq" firstAttribute="top" secondItem="uVC-ob-1b5" secondAttribute="top" constant="8" id="ktS-Xz-KFG"/>
                             <constraint firstItem="hbg-ly-9RE" firstAttribute="centerX" secondItem="dLC-0l-pTO" secondAttribute="centerX" id="p9A-zM-Lhr"/>
                             <constraint firstItem="Owa-JS-GFp" firstAttribute="leading" secondItem="dLC-0l-pTO" secondAttribute="leading" constant="10" id="w23-xF-FOB"/>
                         </constraints>
@@ -289,26 +289,30 @@ desde el último reporte</string>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WhM-bh-trk">
+                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7V-CD-5iM">
                                         <rect key="frame" x="20" y="8" width="374" height="100"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="7h3-0F-ITF"/>
+                                            <constraint firstAttribute="height" constant="100" id="h6s-h9-ZhW"/>
                                         </constraints>
-                                    </webView>
+                                        <wkWebViewConfiguration key="configuration">
+                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                            <wkPreferences key="preferences"/>
+                                        </wkWebViewConfiguration>
+                                    </wkWebView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="WhM-bh-trk" firstAttribute="leading" secondItem="5qY-qV-XsY" secondAttribute="leading" constant="20" id="2Ii-J8-oGe"/>
+                                    <constraint firstAttribute="trailing" secondItem="a7V-CD-5iM" secondAttribute="trailing" constant="20" id="8ij-Ya-2sx"/>
                                     <constraint firstAttribute="trailing" secondItem="rYX-j4-zy7" secondAttribute="trailing" constant="8" id="Ahn-oV-YYx"/>
-                                    <constraint firstItem="WhM-bh-trk" firstAttribute="top" secondItem="5qY-qV-XsY" secondAttribute="top" constant="8" id="Fer-hJ-vHH"/>
-                                    <constraint firstAttribute="trailing" secondItem="WhM-bh-trk" secondAttribute="trailing" constant="20" id="NyY-LR-by3"/>
+                                    <constraint firstItem="a7V-CD-5iM" firstAttribute="top" secondItem="5qY-qV-XsY" secondAttribute="top" constant="8" id="EsI-Rv-iiX"/>
+                                    <constraint firstItem="a7V-CD-5iM" firstAttribute="leading" secondItem="5qY-qV-XsY" secondAttribute="leading" constant="20" id="GfF-9c-R8E"/>
+                                    <constraint firstItem="rYX-j4-zy7" firstAttribute="top" secondItem="a7V-CD-5iM" secondAttribute="bottom" constant="30" id="IJG-TO-TDj"/>
                                     <constraint firstItem="7CR-IU-9Lk" firstAttribute="leading" secondItem="Axg-Q6-lQU" secondAttribute="trailing" constant="20" id="Tzl-Ea-7iZ"/>
                                     <constraint firstItem="rYX-j4-zy7" firstAttribute="leading" secondItem="5qY-qV-XsY" secondAttribute="leading" constant="8" id="YMg-oN-WPb"/>
                                     <constraint firstItem="Axg-Q6-lQU" firstAttribute="leading" secondItem="QZY-8p-ARE" secondAttribute="trailing" constant="20" id="eg7-My-PeB"/>
                                     <constraint firstItem="Axg-Q6-lQU" firstAttribute="centerX" secondItem="5qY-qV-XsY" secondAttribute="centerX" id="fNm-9w-fgw"/>
                                     <constraint firstItem="Axg-Q6-lQU" firstAttribute="top" secondItem="rYX-j4-zy7" secondAttribute="bottom" constant="30" id="fkh-em-b0A"/>
-                                    <constraint firstItem="rYX-j4-zy7" firstAttribute="top" secondItem="WhM-bh-trk" secondAttribute="bottom" constant="30" id="kJu-1u-Sr0"/>
                                     <constraint firstAttribute="height" constant="350" id="kfs-Nt-7ty"/>
                                     <constraint firstItem="7CR-IU-9Lk" firstAttribute="centerY" secondItem="Axg-Q6-lQU" secondAttribute="centerY" id="lxT-p5-Zvs"/>
                                     <constraint firstItem="QZY-8p-ARE" firstAttribute="centerY" secondItem="Axg-Q6-lQU" secondAttribute="centerY" id="tuH-N6-ZEd"/>
@@ -325,7 +329,7 @@ desde el último reporte</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="mensajeOdometro" destination="WhM-bh-trk" id="K3h-xg-W5e"/>
+                        <outlet property="mensajeOdometro" destination="a7V-CD-5iM" id="h0G-0e-ya1"/>
                         <outlet property="vistaTabla" destination="rYX-j4-zy7" id="O31-ey-45m"/>
                     </connections>
                 </viewController>

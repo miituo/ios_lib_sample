@@ -25,6 +25,18 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
     @IBOutlet var izquierdopic: UIImageView!
     @IBOutlet var backpic: UIImageView!
     
+    @IBOutlet weak var derechoCompImage: UIImageView!
+    @IBOutlet weak var derechoCircularProgress: CircularProgressView!
+
+    @IBOutlet weak var frontCompImage: UIImageView!
+    @IBOutlet weak var frontCircularProgress: CircularProgressView!
+
+    @IBOutlet weak var izquierdoCompImage: UIImageView!
+    @IBOutlet weak var izquierdoCircularProgress: CircularProgressView!
+
+    @IBOutlet weak var backCompImage: UIImageView!
+    @IBOutlet weak var backCircularProgress: CircularProgressView!
+    
     var idpolizaParaLog = ""
     
     var imagenselected = 0
@@ -304,55 +316,111 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
 
 //************************ save frontal pcture and send images **************//
     func savePicture(){
-        //PHPhotoLibrary.shared().performChanges({
-        //    PHAssetChangeRequest.creationRequestForAsset(from: self.frontpic.image!)
-        //}, completionHandler: { success, error in
-        //if success {
-        
-        //UIImageWriteToSavedPhotosAlbum(frontpic.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-        
-        self.openloading(mensaje: "Subiendo fotos...")
-        _ = arregloPolizas[self.rowsel]["nopoliza"]!
-        
-        //At last...open the new viewcontrooler
-        //Open view odometer to get picture of odometer
-        for index in 0...3 {
-            
-            if index == 0{
-                let imagennn = self.derechopic.image
-                let idpic = "2"
+        self.derechoCircularProgress.isHidden = false
+        self.frontCircularProgress.isHidden = false
+        self.izquierdoCircularProgress.isHidden = false
+        self.backCircularProgress.isHidden = false
 
-                if !fotosfaltantes[1]{
-                //self.sendimagenes(imagenn: imagennn!,idpic: idpic)
-                    self.sendimagenesdataarraya(imagenn: imagennn!,idpic: idpic)
-                }
-            }
-            if index == 1{
-                let imagennn = self.frontpic.image
-                let idpic = "1"
-                
-                if !fotosfaltantes[0]{
-                //self.sendimagenes(imagenn: imagennn!,idpic: idpic)
-                    self.sendimagenesdataarraya(imagenn: imagennn!,idpic: idpic)
-                }
-            }
-            if index == 2{
-                let imagennn = self.izquierdopic.image
-                let idpic = "4"
-                
-                if !fotosfaltantes[3]{
-                //self.sendimagenes(imagenn: imagennn!,idpic: idpic)
-                    self.sendimagenesdataarraya(imagenn: imagennn!,idpic: idpic)
-                }
-            }
-            if index == 3{
-                let imagennn = self.backpic.image
-                let idpic = "3"
-                
-                if !fotosfaltantes[2]{
-                //self.sendimagenes(imagenn: imagennn!,idpic: idpic)
-                    self.sendimagenesdataarraya(imagenn: imagennn!,idpic: idpic)
-                }
+        self.derechopic.alpha = 0.4
+        self.frontpic.alpha = 0.4
+        self.izquierdopic.alpha = 0.4
+        self.backpic.alpha = 0.4
+        
+        let imageManager = DataImageManager.sharedImage
+        let imagennn = self.derechopic.image!
+        let idpic = "2"
+        imageManager.sendPhotoCar(sendThisImage: !fotosfaltantes[1], rowsel: self.rowsel, imagenn: imagennn, idpic: idpic) { result in
+
+            switch result {
+                case "error":
+                    self.launch_alert()
+                    break
+                case "ok":
+                    DispatchQueue.main.async {
+                        if !fotosfaltantes[1]{
+                            self.derechoCircularProgress.setProgressWithAnimation(duration: 0.3, value: 1.0)
+                            animateImage(image: self.derechoCompImage)
+                        }
+                    }
+                    
+                    let imagennn = self.frontpic.image!
+                    let idpic = "1"
+                    imageManager.sendPhotoCar(sendThisImage: !fotosfaltantes[0], rowsel: self.rowsel, imagenn: imagennn, idpic: idpic) { result in
+
+                        switch result {
+                            case "error":
+                                self.launch_alert()
+                                break
+                            case "ok":
+                                DispatchQueue.main.async {
+                                    if !fotosfaltantes[0]{
+                                        self.frontCircularProgress.setProgressWithAnimation(duration: 0.3, value: 1.0)
+                                        animateImage(image: self.frontCompImage)
+                                    }
+                                }
+                                
+                                let imagennn = self.izquierdopic.image!
+                                let idpic = "4"
+                                imageManager.sendPhotoCar(sendThisImage: !fotosfaltantes[3], rowsel: self.rowsel, imagenn: imagennn, idpic: idpic) { result in
+                                    
+                                    switch result {
+                                        case "error":
+                                            self.launch_alert()
+                                            break
+                                        case "ok":
+                                            DispatchQueue.main.async {
+                                                if !fotosfaltantes[3]{
+                                                    self.izquierdoCircularProgress.setProgressWithAnimation(duration: 0.3, value: 1.0)
+                                                    animateImage(image: self.izquierdoCompImage)
+                                                }
+                                            }
+                                            
+                                            let imagennn = self.backpic.image!
+                                            let idpic = "3"
+                                            imageManager.sendPhotoCar(sendThisImage: !fotosfaltantes[2], rowsel: self.rowsel, imagenn: imagennn, idpic: idpic) { result in
+                                                
+                                                switch result {
+                                                    case "error":
+                                                        self.launch_alert()
+                                                        break
+                                                    case "ok":
+                                                        DispatchQueue.main.async {
+                                                            if !fotosfaltantes[2]{
+                                                                self.backCircularProgress.setProgressWithAnimation(duration: 0.3, value: 1.0)
+                                                                animateImage(image: self.backCompImage)
+                                                            }
+                                                            
+                                                        }
+                                                        
+                                                        //finish send all images
+                                                        if solofotos == 1{
+                                                            if fotosfaltantes[4] == false{
+                                                                self.launch_odometer()
+                                                            }else{
+                                                                solofotos = 0
+                                                                self.updatestatus()
+                                                            }
+                                                        }else{
+                                                            self.launch_odometer()
+                                                        }
+                                                        break
+                                                    default:
+                                                        break
+                                                }
+                                            }
+                                            break
+                                        default:
+                                            break
+                                    }
+                                }
+                                break
+                            default:
+                                break
+                        }
+                    }
+                    break
+                default:
+                    break
             }
         }
     }
@@ -471,82 +539,6 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
     func generateBoundaryString() -> String {
         return "Boundary-\(NSUUID().uuidString)"
     }
-    
-//************************ send image to WS********************************************//
-/*
-     si hay error al enviar fotos, guardas los datos en la cola e inicias servicio back
-     si servicio back esta vivo, entonces nada, else inicias
- */
-
-    func sendimagenesdataarraya(imagenn:UIImage, idpic:String) {
-        
-        //compress image
-        let comrimidad = compressImage(image: imagenn)
-        let tok = arreglo[self.rowsel]["token"]!
-                
-        //prueba alamorife
-        _ = generateBoundaryString()
-
-        let parameters = ["Type": idpic,"PolicyId":arregloPolizas[rowsel]["idpoliza"] ,"PolicyFolio":arregloPolizas[rowsel]["nopoliza"]]
-        //let head = ["Authorization": tok,"Content-Type":"multipart/form-data; boundary=\(boundary)"]
-        let head : HTTPHeaders = ["Authorization": tok,"Content-Type":"application/json"]
-        var data : String = ""
-        data += "\(idpic),"
-        
-        if let polizaid = arregloPolizas[rowsel]["idpoliza"]{
-            data += "\(polizaid),"
-        }
-        if let polizafolio = arregloPolizas[rowsel]["nopoliza"]{
-            data += "\(polizafolio)"
-        }
-
-        //manager.saveDataLog(event: "REQUEST inicio subir foto auto_iOS \(imagenselected) id: \(arregloPolizas[rowsel]["idpoliza"]!)", url: "\(ip)ImageSendProcess/Array/", input: parameters.description, output: "", date: Date(), exeption: "",inshuranceData: arregloPolizas[rowsel]["idpoliza"]!)
-                
-        //Alamofire to upload image
-        AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(comrimidad, withName: "image",fileName: "file\(idpic).jpg", mimeType: "image/jpg")
-            for (key, value) in parameters {
-                multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
-                }
-            },to:"\(ip)ImageSendProcess/Array/",headers:head).responseJSON { (response) in
-            
-            if response.error != nil {
-                //completionHandler(.failure(response.error!))
-                //self.manager.saveDataLog(event: "PROCESS_INTO_THREAD Error auto_iOS \(idpic) id: \(arregloPolizas[self.rowsel]["idpoliza"]!)", url: "\(ip)ImageSendProcess/Array/", input: parameters.description, output: "Error subir foto \(response.error.debugDescription)", date: Date(), exeption: response.error.debugDescription, inshuranceData: arregloPolizas[self.rowsel]["idpoliza"]!)
-                
-                self.launch_alert()
-                
-            } else {
-                switch response.result {
-                case .success( _):
-                    
-                    //completionHandler(.success(response.data!))
-                    //self.manager.saveDataLog(event: "PROCESS_INTO_THREAD Ok auto_iOS \(idpic) id: \(arregloPolizas[self.rowsel]["idpoliza"]!)", url: "\(ip)ImageSendProcess/Array/", input: parameters.description, output: "Foto correcta \(response.debugDescription)", date: Date(), exeption: "",inshuranceData: arregloPolizas[self.rowsel]["idpoliza"]!)
-                    
-                    fotosarriba+=1
-                    
-                    if fotosarriba == 4{
-                        
-                        if solofotos == 1{
-                            if fotosfaltantes[4] == false{
-                                self.launch_odometer()
-                            }else{
-                                solofotos = 0
-                                self.updatestatus()
-                            }
-                        }else{
-                            self.launch_odometer()
-                        }
-                    }
-                    break
-                case .failure( _):
-    
-                    self.launch_alert()
-                    break
-                }                
-            }
-        }
-    }
 
 //************************ launch odometer WS*********************//
     func launch_alert() {
@@ -592,14 +584,27 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
                 
                 refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
                     
+                    self.backCompImage.alpha = 0
+                    self.backCircularProgress.isHidden = true
+                    self.backpic.alpha = 1.0
+
+                    self.izquierdoCompImage.alpha = 0
+                    self.izquierdoCircularProgress.isHidden = true
+                    self.izquierdopic.alpha = 1.0
+                    
+                    self.frontCompImage.alpha = 0
+                    self.frontCircularProgress.isHidden = true
+                    self.frontpic.alpha = 1.0
+                    
+                    self.derechoCompImage.alpha = 0
+                    self.derechoCircularProgress.isHidden = true
+                    self.derechopic.alpha = 1.0
+                    
                     let bundle = Bundle(for: OdometerViewController.self)
                     let storyboard = UIStoryboard(name: "Odometer", bundle: bundle)
                     let myAlert = storyboard.instantiateViewController(withIdentifier: "OdometerViewController") as! OdometerViewController
                     self.navigationController?.pushViewController(myAlert, animated: true)
 
-                    
-                    //let odometerview = self.storyboard?.instantiateViewController(withIdentifier: "Odometer") as! OdometerViewController
-                    //self.present(odometerview, animated: true, completion: nil)
                 }))
                 
                 self.present(refreshAlert, animated: true)
@@ -611,7 +616,6 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
     func updatestatus(){
         
         //alertaloading.dismiss(animated: true, completion: nil)
-        //openloading2(mensaje: "nanana")
         
         let todosEndpoint: String = "\(ip)Policy/UpdatePolicyStatusReport/\(arregloPolizas[rowsel]["idpoliza"]!)/12"
         let tok = arreglo[self.rowsel]["token"]!
@@ -694,34 +698,6 @@ class PhotosCarViewController: UIViewController,UINavigationControllerDelegate, 
             }
         }
         loadTask.resume()
-    }
-
-//************************ save just one image to app******************************//
-    func openloading(mensaje: String){
-        
-        alertaloading.view.tintColor = UIColor.black
-        //CGRect(x: 1, y: 5, width: self.view.frame.size.width - 20, height: 120))
-        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:10, y:5, width:50, height:50)) as UIActivityIndicatorView
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating();
-        
-        alertaloading.view.addSubview(loadingIndicator)
-        present(alertaloading, animated: true, completion: nil)
-    }
-    
-//loading----------------------------------------------------------------------------
-    func openloading2(mensaje: String){
-        
-        alertaloadingodo.view.tintColor = UIColor.black
-        //CGRect(x: 1, y: 5, width: self.view.frame.size.width - 20, height: 120))
-        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRect(x:10, y:5, width:50, height:50)) as UIActivityIndicatorView
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating();
-        
-        alertaloadingodo.view.addSubview(loadingIndicator)
-        self.present(alertaloadingodo, animated: true, completion: nil)
     }
 }
 
