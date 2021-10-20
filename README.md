@@ -8,14 +8,32 @@ Descripción...
 Cocoapods: 
 Primeramente agregar las referencias 
 ```
+  platform :ios, '12.0'
+  
   source 'https://github.com/CocoaPods/Specs.git'
   source 'https://github.com/miituo/ios_libs_podspec.git'
   target 'your_project' do
+
+  use_frameworks!
+
+  pod 'ios_libs', '~> 0.1.5.1'
+
+  end
+```
+
+Si tu app corre a partir de la versión 10.0, considera la siguiente configuración
+```  
+  source 'https://github.com/CocoaPods/Specs.git'
+  source 'https://github.com/miituo/ios_libs_podspec.git'
+  target 'your_project' do
+
+  use_frameworks!
 
   pod 'ios_libs', '~> 0.1.2'
 
   end
 ```
+
 ## Uso:
 
 Para usar la librería miituo, primero debe tener los permisos de la cámara en el archivo info.plist
