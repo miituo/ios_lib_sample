@@ -160,6 +160,13 @@ class PerfilViewController: UIViewController {
         //vc.cadenas = valueToPass
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func facturasView(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "invoiceVC") as! InvoiceViewController
+
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

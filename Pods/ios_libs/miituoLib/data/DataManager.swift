@@ -661,5 +661,76 @@ class DataManager{
                 }
 
         }
-    }    
+    }
+    
+//============================ get invoice list ===========
+    class func getInvoice( policyId: String, completion:@escaping(Bool, Invoice?)->()) {
+       
+        
+        let queryString = "\(ip)Bill/GetBilledInfo/\(policyId)"
+        let headerss: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization" : seguidad
+        ]
+   
+        AF.request(queryString, method: .get, headers: headerss).responseJSON { (response) in
+            switch response.result {
+            case .success(_):
+                
+               
+                guard let data = response.data else {
+                    completion(false,nil)
+                     return
+                 }
+                 let decoder = JSONDecoder()
+               
+                    guard let invoice = try? decoder.decode(Invoice.self, from: data) else {
+                        completion(false,nil)
+                        return
+                    }
+                  
+
+                completion(true, invoice)
+             
+              
+                break
+                
+            case .failure( _):
+              
+                completion(false, nil)
+                break
+            }
+        }
+    
+    }
+    
+//============================ send invoice email ===========
+    class func sendInvoiceEmail(idPolicy:Int,numberMonth:Int, completion:@escaping(Bool)->()) {
+       
+        let queryString = "\(ip)Bill/GenerateBill/\(String(idPolicy))/\(String(numberMonth))"
+        let headerss: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization" : seguidad
+        ]
+        
+      
+   
+        AF.request(queryString, method: .post, encoding: JSONEncoding.default, headers: headerss).responseJSON { (response) in
+            switch response.result {
+            case .success(_):
+                
+            
+                completion(true)
+             
+              
+                break
+                
+            case .failure( _):
+              
+                completion(false)
+                break
+            }
+        }
+    
+    }
 }

@@ -9,8 +9,10 @@ target 'UsingLibSample' do
   use_frameworks!
 
   # Pods for UsingLibSample
-  #pod 'ios_libs', :path => '/Users/jcristobalj/Documents/ios_libs'
-  pod 'ios_libs', '~> 0.1.5.1'
+
+  pod 'ios_libs', '~> 0.1.6'
+
+  #pod 'ios_libs', :path => '/Users/johncristobal/Documents/ios_libs'
   #pod 'Alamofire', '~> 5.3.0'
   #pod 'SkeletonView', '~> 1.24.4'
   
